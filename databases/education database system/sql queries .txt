@@ -1,0 +1,82 @@
+CREATE TABLE `answer` (
+  `subject_id` char,
+  `question_id` char,
+  `option_id` char,
+  PRIMARY KEY (`subject_id`, `question_id`, `option_id`),
+  FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
+  FOREIGN KEY ( question_id ) REFERENCES questions( question_id )
+);
+
+CREATE TABLE `questions` (
+  `question_id` char,
+  `question_name` char,
+  `answer` char,
+  `option_1` char,
+  `option_2` char,
+  `option_3` char,
+  `option_4` char,
+  PRIMARY KEY (`question_id`)
+);
+
+CREATE TABLE `exam` (
+  `type_of_exam` char,
+  `subject_id` char,
+  `start_date` datetime,
+  `end_date` datetime,
+  PRIMARY KEY (`type_of_exam`, `subject_id`),
+  FOREIGN KEY ( subject_id ) REFERENCES subjects( subject_id )
+);
+
+CREATE TABLE `user` (
+  `id` char,
+  `password` char,
+  `first_name` char,
+  `last_name` char,
+  `type` char,
+  `email` char,
+  `address` char,
+  `discription` char,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `show_marks` (
+  `id` char,
+  `type_of_exam` char,
+  `subject_id` char,
+  `mark` int,
+  PRIMARY KEY (`id`, `type_of_exam`, `subject_id`)
+  FOREIGN KEY ( id ) REFERENCES user( id ),
+  FOREIGN KEY ( type_of_exam) REFERENCES exam( type_of_exam),
+  FOREIGN KEY ( subject_id) REFERENCES exam( subject_id),
+  FOREIGN KEY ( type_of_exam) REFERENCES marks( type_of_exam)
+);
+
+CREATE TABLE `marks` (
+  `id` char,
+  `subject_id` char,
+  `type_of_exam` char,
+  `mark` char,
+  PRIMARY KEY (`id`, `subject_id`, `type_of_exam`, `mark`),
+  FOREIGN KEY ( subject_id) REFERENCES subjects( subject_id)
+);
+
+CREATE TABLE `subjects` (
+  `subject_id` char,
+  `subject_name` char,
+  PRIMARY KEY (`subject_id`)
+);
+
+CREATE TABLE `log_in` (
+  `id` char,
+  `first_name` char,
+  `last_name` char,
+  `type` char,
+  `log_in` datetime,
+  `log_out` datetime,
+  PRIMARY KEY (`id`, `log_in`, `log_out`),
+  FOREIGN KEY ( id ) REFERENCES user( id ),
+  FOREIGN KEY ( first_name) REFERENCES user( first_name),
+  FOREIGN KEY ( last_name) REFERENCES user( last_name),
+  FOREIGN KEY ( type) REFERENCES user( type)
+);
+
